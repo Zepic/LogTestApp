@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+<script>
+    var X;
+    var Y;
+    var d = new Date();
+    var Goal;
+    getData()
+
+    function temp() {
+        X = document.getElementById("x").value;
+        Y = document.getElementById("y").value;
+        //X = x.value;
+        //Y = y.value;
+        sendData();
+    }
+    function SetGoal(goal) {
+        Goal = goal;
+    }
+    function Show() {
+        document.getElementById("app").innerHTML = `        <div>
+            <h1>What i'm supposed to focus on today</h1>
+            <h2>${Goal}</h2>
+        </div>
+
+        <div>
+            <div>Hva har jeg gjort idag. <input id="x" /></div>
+            <div>Hva har jeg skal fokusere på imorgen. <input id="y" /></div>
+        </div>
+
+        <button onclick="temp()">Submit</button>`;
+        
+    }
+
+    async function getData() {
+        const response = await axios.get('/api/log');
+        console.log(response);
+        SetGoal(response.data.doingTomorrow);
+        Show();
+    }
+
+    async function sendData() {
+        const response = await axios.post('/api/log', { Date: d, DoneToday: X, DoingTomorrow: Y });
+        console.log(response.data);
+    }
+
+</script>
+</body>
+</html>
