@@ -14,7 +14,7 @@
     var Y;
     var d = new Date();
     var Goal;
-    getData()
+    getData();
 
     function temp() {
         X = document.getElementById("x").value;
@@ -23,9 +23,9 @@
         //Y = y.value;
         sendData();
     }
-    function SetGoal(goal) {
-        Goal = goal;
-    }
+    //function SetGoal(goal) {
+    //    Goal = goal;
+    //}
     function Show() {
         document.getElementById("app").innerHTML = `        <div>
             <h1>What i'm supposed to focus on today</h1>
@@ -33,8 +33,8 @@
         </div>
 
         <div>
-            <div>Hva har jeg gjort idag. <input id="x" /></div>
-            <div>Hva har jeg skal fokusere på imorgen. <input id="y" /></div>
+            <div>What have i done today. <input id="x" /></div>
+            <div>What i'm going to focus on tomorrow. <input id="y" /></div>
         </div>
 
         <button onclick="temp()">Submit</button>`;
@@ -44,7 +44,7 @@
     async function getData() {
         const response = await axios.get('/api/log');
         console.log(response);
-        SetGoal(response.data.doingTomorrow);
+        Goal = response.data[0].doingTomorrow;
         Show();
     }
 
